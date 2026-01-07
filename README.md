@@ -1,73 +1,101 @@
-# React + TypeScript + Vite
+# Hebrew Touch Typing Tutor 🇮🇱
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive web application designed to teach children touch typing skills in Hebrew using kid-friendly vocabulary and sentences.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **70+ Hebrew sentences** across 9 categories (animals, family, food, school, nature, home, colors, actions, greetings)
+- **3-7 word sentences** appropriate for ~10 year olds
+- **On-screen Hebrew keyboard** showing both Hebrew and English characters
+- **Visual typing feedback** - character-by-character highlighting with correct/incorrect indicators
+- **Dark mode UI** matching Obvious design system
+- **Fully responsive** - works on mobile, tablet, and desktop
+- **Touch support** - tap keys on mobile devices
+- **Score & streak tracking** for gamification
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 18** with TypeScript
+- **Vite** for fast development and builds
+- **CSS3** with CSS variables for theming
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Install dependencies
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Start development server
+npm run dev
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Build for production
+npm run build
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Preview production build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Keyboard Layout
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Uses the standard Israeli keyboard layout. Each key displays:
+- **Top**: Hebrew character
+- **Bottom**: Corresponding English key
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The next expected key is highlighted in indigo to guide learners.
+
+## Project Structure
+
 ```
+src/
+├── App.tsx        # Main application component
+│                  # - Hebrew keyboard layout mapping
+│                  # - Sentence data (70+ sentences)
+│                  # - Typing logic and state management
+├── App.css        # Styling (dark mode, responsive)
+├── main.tsx       # React entry point
+└── index.css      # Base styles
+```
+
+## Sentence Categories
+
+| Category | Examples |
+|----------|----------|
+| Animals | הכלב רץ בגן (The dog runs in the garden) |
+| Family | אמא מבשלת ארוחת ערב (Mom cooks dinner) |
+| Food | אני אוהב לאכול תפוחים (I like to eat apples) |
+| School | אני הולך לבית ספר (I go to school) |
+| Nature | השמש זורחת בשמים (The sun shines in the sky) |
+| Home | הבית שלי יפה (My house is beautiful) |
+| Colors | השמים כחולים היום (The sky is blue today) |
+| Actions | אני רץ בפארק (I run in the park) |
+| Greetings | בוקר טוב לכולם (Good morning everyone) |
+
+## Deployment
+
+Currently hosted via Obvious at: `https://prj_6Luom74C-5173.hosted.obvious.ai`
+
+To deploy elsewhere:
+1. Run `npm run build`
+2. Deploy the `dist/` folder to any static hosting (Vercel, Netlify, GitHub Pages, etc.)
+
+## Future Enhancements
+
+Potential improvements for future development:
+- [ ] Progress tracking / persistence
+- [ ] Difficulty levels (longer sentences, less common vocabulary)
+- [ ] Sound effects for correct/incorrect typing
+- [ ] Leaderboard functionality
+- [ ] Custom sentence input
+- [ ] Nikud (vowel marks) support
+- [ ] Print keyboard layout reference sheet
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+MIT
