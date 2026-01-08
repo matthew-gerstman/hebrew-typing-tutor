@@ -538,13 +538,30 @@ function App() {
         }, 400)
       }
     } else {
+      // Wrong character - add it anyway (will show as error) and mark sentence as having errors
+      const newTyped = typedText + hebrewChar
+      setTypedText(newTyped)
       setAreaState('error')
-      setTimeout(() => {
-        setAreaState('normal')
-        handleSentenceComplete(false)
-      }, 400)
+      setTimeout(() => setAreaState('normal'), 150)
+      
+      // Track that this sentence had an error
+      if (!currentSentence.inReview) {
+        setSessionSentences(prev => prev.map(s => 
+          s.sentence.hebrew === currentSentence.sentence.hebrew 
+            ? { ...s, timesIncorrect: s.timesIncorrect + 1, errorStreak: s.errorStreak + 1 }
+            : s
+        ))
+      }
+      
+      // If sentence is complete (even with errors), handle it
+      if (newTyped.length === currentSentence.sentence.hebrew.length) {
+        setTimeout(() => {
+          setAreaState('normal')
+          handleSentenceComplete(false)
+        }, 400)
+      }
     }
-  }, [currentSentence, typedText, handleSentenceComplete, showSummary])
+  }, [currentSentence, typedText, handleSentenceComplete, showSummary, setSessionSentences])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
