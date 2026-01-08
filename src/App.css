@@ -16,6 +16,9 @@
   --success: #22c55e;
   --success-subtle: rgba(34, 197, 94, 0.15);
   --error: #ef4444;
+  --error-subtle: rgba(239, 68, 68, 0.1);
+  --warning: #f59e0b;
+  --warning-subtle: rgba(245, 158, 11, 0.15);
   --border: #e5e5e5;
   --key-bg: #ffffff;
   --key-border: #d0d0d0;
@@ -43,6 +46,9 @@
   --success: #4ade80;
   --success-subtle: rgba(74, 222, 128, 0.2);
   --error: #f87171;
+  --error-subtle: rgba(248, 113, 113, 0.15);
+  --warning: #fbbf24;
+  --warning-subtle: rgba(251, 191, 36, 0.2);
   --border: #2a2a2a;
   --key-bg: #252525;
   --key-border: #3a3a3a;
@@ -79,19 +85,13 @@ body {
   overflow: hidden;
 }
 
-/* Header - compact */
+/* Header */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 8px;
   flex-shrink: 0;
-}
-
-.header h1 {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-secondary);
 }
 
 .header-right {
@@ -116,7 +116,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* Category dropdown */
+/* Tier dropdown */
 .category-wrapper {
   position: relative;
   flex-shrink: 0;
@@ -149,10 +149,10 @@ body {
   border-radius: 8px;
   padding: 4px;
   display: none;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 4px;
   z-index: 100;
-  min-width: 200px;
+  min-width: 180px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
@@ -161,13 +161,14 @@ body {
 }
 
 .category-dropdown button {
-  padding: 6px 10px;
+  padding: 8px 12px;
   border: none;
   border-radius: 4px;
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
+  text-align: left;
 }
 
 .category-dropdown button:hover {
@@ -177,6 +178,40 @@ body {
 .category-dropdown button.active {
   background: var(--accent);
   color: white;
+}
+
+/* Session Progress */
+.session-progress {
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  gap: 12px;
+}
+
+.review-badge {
+  color: var(--warning);
+  font-weight: 500;
+}
+
+.progress-bar-container {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--success);
+  transition: width 0.5s ease;
 }
 
 /* XP bar */
@@ -210,7 +245,7 @@ body {
   transition: width 0.5s;
 }
 
-/* Typing area - DOMINANT */
+/* Typing area */
 .typing-area {
   flex: 1;
   display: flex;
@@ -221,23 +256,45 @@ body {
   padding: 12px 8px;
 }
 
-/* Hebrew text first (big) */
+.word-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+}
+
+.review-indicator {
+  color: var(--warning);
+  background: var(--warning-subtle);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.rep-counter {
+  color: var(--text-muted);
+}
+
+/* Hebrew text - sentence style */
 .hebrew-text {
-  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
   direction: rtl;
   font-weight: 400;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  line-height: 1.4;
+  line-height: 1.5;
   gap: 2px;
   margin-bottom: 16px;
+  text-align: center;
+  max-width: 100%;
 }
 
 .hebrew-text span {
   transition: color 0.1s;
-  padding: 2px 4px;
-  border-radius: 4px;
+  padding: 1px 2px;
+  border-radius: 3px;
 }
 
 .hebrew-text .pending {
@@ -258,11 +315,12 @@ body {
   text-decoration: underline wavy var(--error);
 }
 
-/* English translation below (bigger now) */
+/* English translation */
 .translation {
-  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-size: clamp(1rem, 3vw, 1.4rem);
   color: var(--text-secondary);
   text-align: center;
+  max-width: 90%;
 }
 
 .typing-area.complete {
@@ -282,7 +340,130 @@ body {
   75% { transform: translateX(3px); }
 }
 
-/* Keyboard - BIG */
+/* Summary Screen */
+.summary-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.summary-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.summary-stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 24px;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.word-results {
+  width: 100%;
+  max-width: 500px;
+}
+
+.word-results h3 {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.word-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.word-result.mastered {
+  border-color: var(--success);
+  background: var(--success-subtle);
+}
+
+.word-result.review {
+  border-color: var(--warning);
+  background: var(--warning-subtle);
+}
+
+.sentence-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.word-hebrew {
+  font-size: 1rem;
+  font-weight: 500;
+  direction: rtl;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.word-english {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: block;
+}
+
+.word-stats {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.restart-btn {
+  margin-top: 24px;
+  padding: 12px 32px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.1s;
+}
+
+.restart-btn:hover {
+  opacity: 0.9;
+}
+
+.restart-btn:active {
+  transform: scale(0.98);
+}
+
+/* Keyboard */
 .keyboard {
   flex-shrink: 0;
   background: var(--bg-keyboard);
@@ -427,6 +608,10 @@ body {
     padding: 8px 10px;
   }
   
+  .hebrew-text {
+    font-size: clamp(1.4rem, 4.5vw, 2rem);
+  }
+  
   .key {
     max-width: 36px;
     height: 48px;
@@ -461,5 +646,14 @@ body {
   
   .space-key {
     max-width: 140px;
+  }
+  
+  .summary-stats {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .stat-box {
+    padding: 12px 20px;
   }
 }
